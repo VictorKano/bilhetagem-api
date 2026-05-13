@@ -228,28 +228,23 @@ public class CobrancaService {
 
         for (PixItemDTO item : dto.pix()) {
             try {
-                // Req 4.2: ignorar txid nulo ou vazio
                 if (item.txid() == null || item.txid().isBlank()) {
                     continue;
                 }
 
-                // Req 4.3: buscar cobranca mais recente por txid
                 Optional<Cobranca> optCobranca =
                         cobrancaRepository.findTopByTxidOrderByIdDesc(item.txid());
 
-                // Req 4.4: ignorar se nao encontrada
                 if (optCobranca.isEmpty()) {
                     continue;
                 }
 
                 Cobranca cobranca = optCobranca.get();
 
-                // Req 4.5: ignorar se ja FINALIZADA
                 if (CobrancaStatusEnum.FINALIZADA.equals(cobranca.getStatus())) {
                     continue;
                 }
 
-                // Req 4.6: criar VersaoFilha com status=FINALIZADA
                 Cobranca versaoFilha = new Cobranca();
                 versaoFilha.setIdUsuario(cobranca.getIdUsuario());
                 versaoFilha.setNomeSolicitante(cobranca.getNomeSolicitante());
@@ -265,20 +260,17 @@ public class CobrancaService {
                 versaoFilha.setThreeDsPayload(cobranca.getThreeDsPayload());
                 versaoFilha.setDataCriacao(cobranca.getDataCriacao());
                 versaoFilha.setDataExpiracao(cobranca.getDataExpiracao());
-                // Req 7.2: dataFinalizada no fuso America/Sao_Paulo
                 versaoFilha.setDataFinalizada(
                         ZonedDateTime.now(ZoneId.of(TIMEZONE_SP)).toLocalDateTime());
                 versaoFilha.setVersaoPai(cobranca);
 
                 cobrancaRepository.save(versaoFilha);
 
-                // Req 8.7: publicar evento cobranca.finalizada no Kafka (se disponivel)
                 if (kafkaTemplate != null) {
                     kafkaTemplate.send(TOPIC_COBRANCA_FINALIZADA, item.txid(), versaoFilha);
                 }
 
             } catch (Exception e) {
-                // Req 4.7: capturar excecao por item, registrar ERROR e continuar
                 log.error("Erro ao processar item do webhook PIX para txid {}: {}",
                         item.txid(), e.getMessage(), e);
             }

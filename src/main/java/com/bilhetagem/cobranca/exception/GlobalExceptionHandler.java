@@ -20,10 +20,6 @@ public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    // -------------------------------------------------------------------------
-    // Response body records
-    // -------------------------------------------------------------------------
-
     public record ErrorResponse(String codigo, String mensagem) {}
 
     public record NotFoundResponse(String mensagem) {}
@@ -33,10 +29,6 @@ public class GlobalExceptionHandler {
     }
 
     public record InternalErrorResponse(String mensagem) {}
-
-    // -------------------------------------------------------------------------
-    // Handlers
-    // -------------------------------------------------------------------------
 
     /**
      * NegocioException → HTTP 422 com {codigo, mensagem}.
