@@ -1,0 +1,92 @@
+# ============================================================
+# Maven
+# ============================================================
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!.mvn/wrapper/maven-wrapper.properties
+*.jar
+*.war
+*.ear
+*.class
+
+# ============================================================
+# Spring Boot
+# ============================================================
+spring-shell.log
+*.log
+logs/
+
+# ============================================================
+# Environment / secrets — NEVER commit these
+# ============================================================
+.env
+.env.*
+*.env
+application-local.yml
+application-local.properties
+application-secret.yml
+application-secret.properties
+
+# ============================================================
+# IDE — IntelliJ IDEA
+# ============================================================
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# ============================================================
+# IDE — Eclipse / STS
+# ============================================================
+.classpath
+.project
+.settings/
+bin/
+*.launch
+
+# ============================================================
+# IDE — VS Code (keep only team-shared settings if desired)
+# ============================================================
+.vscode/
+# To share VS Code settings with the team, remove the line
+# above and uncomment the lines below instead:
+# .vscode/*
+# !.vscode/settings.json
+# !.vscode/extensions.json
+
+# ============================================================
+# Kiro AI
+# ============================================================
+.kiro/
+
+# ============================================================
+# OS artifacts
+# ============================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ============================================================
+# Docker
+# ============================================================
+docker-compose.override.yml
+
+# ============================================================
+# Temporary / misc
+# ============================================================
+*.tmp
+*.bak
+*.swp
+*.orig
+*.rej
