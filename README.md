@@ -50,10 +50,12 @@ Portas expostas:
 
 ```bash
 # Linux / macOS
-./mvnw clean package -DskipTests
+mvn clean package -DskipTests
+# ou: ./mvnw clean package -DskipTests
 
 # Windows
-mvnw.cmd clean package -DskipTests
+mvn clean package -DskipTests
+# ou: mvnw.cmd clean package -DskipTests
 ```
 
 O artefato gerado estará em:
@@ -106,13 +108,27 @@ docker compose up -d
 
 ```bash
 # Linux / macOS
+mvn test
+# ou, se o wrapper estiver gerado:
 ./mvnw test
 
 # Windows
+mvn test
+# ou, se o wrapper estiver gerado:
 mvnw.cmd test
 ```
 
-Os testes usam o perfil `test`, que ativa H2 em memória e desabilita Redis e Kafka. Nenhuma dependência externa é necessária.
+Para rodar uma classe específica:
+```bash
+mvn test -Dtest=CobrancaServiceTest
+```
+
+Para rodar um método específico:
+```bash
+mvn test -Dtest=CobrancaServiceTest#criarCobrancaPixComSucessoDeveSalvarERetornarCamposEsperados
+```
+
+Os testes usam o perfil `test`, que ativa H2 em memória e implementações fake para os clientes externos. Nenhuma dependência externa é necessária para rodar os testes.
 
 ---
 
@@ -120,10 +136,12 @@ Os testes usam o perfil `test`, que ativa H2 em memória e desabilita Redis e Ka
 
 ```bash
 # Linux / macOS
-./mvnw verify
+mvn verify
+# ou: ./mvnw verify
 
 # Windows
-mvnw.cmd verify
+mvn verify
+# ou: mvnw.cmd verify
 ```
 
 O plugin JaCoCo verifica cobertura mínima de **70% de linhas** no pacote `service`. O build falha se a cobertura estiver abaixo do limite.
