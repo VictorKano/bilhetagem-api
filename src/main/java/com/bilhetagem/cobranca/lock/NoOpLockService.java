@@ -5,23 +5,23 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.stereotype.Component;
 
 /**
- * Fallback {@link LockService} used when Redis is not configured.
+ * Implementação de fallback de {@link LockService} usada quando o Redis não está configurado.
  *
- * <p>Since no distributed lock infrastructure is available, {@link #tryAcquire} always
- * throws {@link LockNotAcquiredException} to prevent concurrent charge generation.
- * {@link #release} is a no-op because no lock is ever held.
+ * <p>Como nenhuma infraestrutura de lock distribuído está disponível, {@link #tryAcquire}
+ * sempre lança {@link LockNotAcquiredException} para impedir a geração concorrente de cobranças.
+ * {@link #release} é um no-op pois nenhum lock é adquirido.
  */
 @Component
 @ConditionalOnMissingBean(LockService.class)
 public class NoOpLockService implements LockService {
 
     /**
-     * Always throws {@link LockNotAcquiredException} because no lock backend is available.
+     * Sempre lança {@link LockNotAcquiredException} pois nenhum backend de lock está disponível.
      *
-     * @param key        the lock key (unused)
-     * @param ttlSeconds time-to-live in seconds (unused)
-     * @return never returns normally
-     * @throws LockNotAcquiredException always
+     * @param key        a chave do lock (não utilizada)
+     * @param ttlSeconds tempo de vida em segundos (não utilizado)
+     * @return nunca retorna normalmente
+     * @throws LockNotAcquiredException sempre
      */
     @Override
     public boolean tryAcquire(String key, long ttlSeconds) {
@@ -29,9 +29,9 @@ public class NoOpLockService implements LockService {
     }
 
     /**
-     * No-op: no lock was acquired, so nothing needs to be released.
+     * No-op: nenhum lock foi adquirido, portanto nada precisa ser liberado.
      *
-     * @param key the lock key (unused)
+     * @param key a chave do lock (não utilizada)
      */
     @Override
     public void release(String key) {

@@ -1,23 +1,23 @@
 package com.bilhetagem.cobranca.lock;
 
 /**
- * Abstraction for distributed lock operations.
+ * Abstração para operações de lock distribuído.
  */
 public interface LockService {
 
     /**
-     * Attempts to acquire a lock for the given key with the specified TTL.
+     * Tenta adquirir o lock para a chave informada com o TTL especificado.
      *
-     * @param key        the lock key
-     * @param ttlSeconds time-to-live in seconds
-     * @return {@code true} if the lock was acquired, {@code false} otherwise
+     * @param key        a chave do lock
+     * @param ttlSeconds tempo de vida em segundos
+     * @return {@code true} se o lock foi adquirido, {@code false} caso contrário
      */
     boolean tryAcquire(String key, long ttlSeconds);
 
     /**
-     * Releases the lock for the given key.
+     * Libera o lock para a chave informada.
      *
-     * @param key the lock key
+     * @param key a chave do lock
      */
     void release(String key);
 }

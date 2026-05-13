@@ -9,12 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.TimeUnit;
 
 /**
- * {@link LockService} implementation backed by Redis via Redisson.
+ * Implementação de {@link LockService} baseada em Redis via Redisson.
  *
- * <p>Active only when {@code spring.data.redis.host} is configured and not in the
- * {@code test} profile.
- * Uses a non-waiting {@code tryLock} with the given TTL so that concurrent
- * requests for the same key fail fast instead of queuing.
+ * <p>Ativa somente quando {@code spring.data.redis.host} está configurado e o perfil
+ * não é {@code test}. Utiliza {@code tryLock} sem espera com o TTL informado para que
+ * requisições concorrentes para a mesma chave falhem rapidamente em vez de ficarem na fila.
  */
 @Component
 @Profile("!test")
@@ -28,11 +27,11 @@ public class RedisLockService implements LockService {
     }
 
     /**
-     * Attempts to acquire the lock immediately (wait time = 0).
+     * Tenta adquirir o lock imediatamente (tempo de espera = 0).
      *
-     * @param key        the lock key
-     * @param ttlSeconds time-to-live in seconds; the lock is released automatically after this period
-     * @return {@code true} if the lock was acquired, {@code false} otherwise
+     * @param key        a chave do lock
+     * @param ttlSeconds tempo de vida em segundos; o lock é liberado automaticamente após esse período
+     * @return {@code true} se o lock foi adquirido, {@code false} caso contrário
      */
     @Override
     public boolean tryAcquire(String key, long ttlSeconds) {
@@ -46,9 +45,9 @@ public class RedisLockService implements LockService {
     }
 
     /**
-     * Releases the lock for the given key if it is held by the current thread.
+     * Libera o lock para a chave informada se ele estiver sendo mantido pela thread atual.
      *
-     * @param key the lock key
+     * @param key a chave do lock
      */
     @Override
     public void release(String key) {

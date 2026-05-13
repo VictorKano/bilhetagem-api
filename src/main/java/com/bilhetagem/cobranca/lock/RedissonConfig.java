@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 /**
- * Configures the {@link RedissonClient} bean when {@code spring.data.redis.host} is present.
- * Not active in the {@code test} profile to allow H2-based integration tests without Redis.
+ * Configura o bean {@link RedissonClient} quando {@code spring.data.redis.host} está presente.
+ * Não é ativo no perfil {@code test} para permitir testes de integração com H2 sem Redis.
  */
 @Configuration
 @Profile("!test")

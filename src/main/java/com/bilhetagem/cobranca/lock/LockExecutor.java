@@ -8,13 +8,13 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.Callable;
 
 /**
- * Executes a {@link Callable} under a distributed lock.
+ * Executa um {@link Callable} sob um lock distribuído.
  *
- * <p>Acquires the lock before executing the callable and always releases it in a
- * {@code finally} block. If the lock cannot be acquired, a
- * {@link LockNotAcquiredException} is thrown immediately without executing the callable.
- * Any failure during lock release is logged at WARN level and swallowed so that the
- * original result (or exception) from the callable is propagated to the caller.
+ * <p>Adquire o lock antes de executar o callable e sempre o libera no bloco
+ * {@code finally}. Se o lock não puder ser adquirido, uma
+ * {@link LockNotAcquiredException} é lançada imediatamente sem executar o callable.
+ * Falhas na liberação do lock são registradas em nível WARN e suprimidas para que
+ * o resultado original (ou exceção) do callable seja propagado ao chamador.
  */
 @Component
 public class LockExecutor {
@@ -28,16 +28,16 @@ public class LockExecutor {
     }
 
     /**
-     * Acquires the lock identified by {@code key}, executes {@code callable}, and
-     * releases the lock in a {@code finally} block.
+     * Adquire o lock identificado por {@code key}, executa o {@code callable} e
+     * libera o lock no bloco {@code finally}.
      *
-     * @param key        the lock key
-     * @param ttlSeconds lock time-to-live in seconds
-     * @param callable   the operation to execute under the lock
-     * @param <T>        return type of the callable
-     * @return the value returned by {@code callable}
-     * @throws LockNotAcquiredException if the lock could not be acquired
-     * @throws RuntimeException         wrapping any checked exception thrown by the callable
+     * @param key        a chave do lock
+     * @param ttlSeconds tempo de vida do lock em segundos
+     * @param callable   a operação a ser executada sob o lock
+     * @param <T>        tipo de retorno do callable
+     * @return o valor retornado pelo {@code callable}
+     * @throws LockNotAcquiredException se o lock não puder ser adquirido
+     * @throws RuntimeException         encapsulando qualquer exceção checada lançada pelo callable
      */
     public <T> T execute(String key, long ttlSeconds, Callable<T> callable) {
         boolean acquired = lockService.tryAcquire(key, ttlSeconds);
